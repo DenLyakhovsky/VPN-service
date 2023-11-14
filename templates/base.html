@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="justify-content:space-between">
+    <div class="navbar-title">
+        <span class="navbar-text">
+            <a class="navbar-brand" href="{% url 'home' %}" style="padding-left:20px">Service</a>
+        </span>
+    </div>
+    <div>
+        <span class="collapse navbar-collapse">
+            <a class="navbar-brand" href="#" style="padding-left:20px; font-size:14px">Personal office</a>
+        </span>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content: flex-end; padding-right:100px">
+        <span class="navbar-text">
+            {% if request.user.is_authenticated %}
+                Hello, {{ user.username.title }} | <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'register' %}">Register</a> | <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </span>
+    </div>
+
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
+

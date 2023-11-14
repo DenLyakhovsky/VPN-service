@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
+{% include 'base.html' %}
 
-<h1>Register</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary btn-block">Register</button>
-</form>
+{% block content %}
+<div style="padding:50px">
+    <h1>Register</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary btn-block">Register</button>
+    </form>
+    <br>
+    <br>
 
-</body>
-</html>
+    <a href="{% url 'home' %}">To the main page</a>
+</div>
+{% endblock %}

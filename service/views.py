@@ -1,6 +1,4 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView
-
 from service.forms import *
 from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
