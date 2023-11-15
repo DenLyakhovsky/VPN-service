@@ -1,24 +1,37 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 
 
 class UserRegisterForm(UserCreationForm):
-    user_name = forms.CharField(label='User Name', widget=forms.TextInput(
+    username = forms.CharField(label='Імʼя', widget=forms.TextInput(
         attrs={'class': 'form-control', 'autocomplete': 'off'}))
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(
+    last_name = forms.CharField(label='Прізвище', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'autocomplete': 'off'}))
+    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(
         attrs={'class': 'form-control'}))
-    password2 = forms.CharField(label='Password repeat', widget=forms.PasswordInput(
+    password2 = forms.CharField(label='Повтор паролю', widget=forms.PasswordInput(
         attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2')
+        fields = ('username', 'last_name', 'password1', 'password2')
 
 
 class UserLoginForm(AuthenticationForm):
-    username = forms.CharField(label='User Name', widget=forms.TextInput(
+    username = forms.CharField(label='Імʼя', widget=forms.TextInput(
         attrs={'class': 'form-control', 'autocomplete': 'off'}))
 
-    password = forms.CharField(label='Password', widget=forms.PasswordInput(
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(
         attrs={'class': 'form-control'}))
+
+
+class UserUpdateForm(forms.ModelForm):
+    username = forms.CharField(max_length=150, required=True, widget=forms.TextInput(
+        attrs={'class': 'form-control'}))
+    last_name = forms.CharField(max_length=150, required=True, widget=forms.TextInput(
+        attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = User
+        fields = ['username', 'last_name']

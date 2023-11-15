@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Personal office
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Блок з ім'ям та прізвищем -->
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Особиста кабінет</h3>
+                    <p class="card-text">Привіт, {{ user }} {{ user.last_name }}</p>
+                    <br>
+
+                    <a href="{% url 'update' user.pk %}">Редагувати</a>
+                </div>
+
+
+            </div>
+
+            <div class="col-md-6">
+                <!-- Блок зі статистикою -->
+                <div class="card" style="margin-top:60px">
+                    <div class="card-body">
+                        <h3 class="card-title">Статистика</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Кліків
+                                <span class="badge bg-primary">42</span>
+                                <!-- Замініть на виведення реальної статистики -->
+                            </li>
+                            <!-- Додайте інші елементи списку статистики за потребою -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
