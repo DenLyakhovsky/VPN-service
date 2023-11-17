@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import UserURL
 
 
+# Registration form
 class UserRegisterForm(UserCreationForm):
     username = forms.CharField(label='Імʼя', widget=forms.TextInput(
         attrs={'class': 'form-control', 'autocomplete': 'off'}))
@@ -19,6 +20,7 @@ class UserRegisterForm(UserCreationForm):
         fields = ('username', 'last_name', 'password1', 'password2')
 
 
+# Login form
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(label='Імʼя', widget=forms.TextInput(
         attrs={'class': 'form-control', 'autocomplete': 'off'}))
@@ -27,6 +29,7 @@ class UserLoginForm(AuthenticationForm):
         attrs={'class': 'form-control'}))
 
 
+# Update form
 class UserUpdateForm(forms.ModelForm):
     username = forms.CharField(max_length=150, required=True, widget=forms.TextInput(
         attrs={'class': 'form-control'}))
@@ -38,6 +41,7 @@ class UserUpdateForm(forms.ModelForm):
         fields = ['username', 'last_name']
 
 
+# Create a URL form
 class UserCreateURLSForm(forms.ModelForm):
     class Meta:
         model = UserURL

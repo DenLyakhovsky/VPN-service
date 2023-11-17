@@ -62,6 +62,7 @@ def user_logout(request):
     return redirect('login')
 
 
+# View of personal profile
 @method_decorator(login_required, name='dispatch')
 class UserProfileView(DetailView):
     model = User
@@ -71,6 +72,7 @@ class UserProfileView(DetailView):
     def get_object(self, queryset=None):
         return self.request.user
 
+    # We receive data for statistics and links
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['sites'] = UserURL.objects.filter(user=self.request.user)
@@ -78,6 +80,7 @@ class UserProfileView(DetailView):
         return context
 
 
+# Updating user data
 @method_decorator(login_required, name='dispatch')
 class UserUpdateView(UpdateView):
     model = User
@@ -113,6 +116,7 @@ class UserUpdateView(UpdateView):
         return reverse_lazy('profile')
 
 
+# Creation of the URL by the client
 @method_decorator(login_required, name='dispatch')
 class UserCreateURLView(FormView):
     form_class = UserCreateURLSForm
@@ -126,6 +130,7 @@ class UserCreateURLView(FormView):
         return redirect('profile')
 
 
+# Provy view
 @method_decorator(login_required, name='dispatch')
 class ProxyView(View):
     def get(self, request, site_url, path):
@@ -136,7 +141,6 @@ class ProxyView(View):
 
         proxied_url_with_scheme = f'http://localhost:8000/{proxied_url}'
 
-        # Збільшення лічильника при отриманні запиту
         user_id = request.user.id
 
         try:
@@ -146,7 +150,6 @@ class ProxyView(View):
 
         click.increment_clicks()
 
-        # Проксіювання запиту
         response = requests.get(proxied_url_with_scheme, headers=request.headers)
 
         return HttpResponse(response.content, content_type=response.headers['content-type'])

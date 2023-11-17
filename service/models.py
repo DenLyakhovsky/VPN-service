@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 
+# Creation of url, title of the site by the client
 class UserURL(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Користувач')
     site_url = models.CharField(max_length=150, verbose_name='Посилання')
@@ -12,6 +13,7 @@ class UserURL(models.Model):
         return f'{self.user} : {self.site_name}'
 
 
+# Counting clicks
 class Click(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1, verbose_name='Користувач')
     url = models.URLField(_("Посилання"), unique=True)
