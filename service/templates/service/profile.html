@@ -29,15 +29,18 @@
                     <!-- Частина "Статистика" -->
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="card-title">Статистика</h3>
+                            <h3 class="card-title">Статистика кількості переходів</h3>
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Кількість переходів
-                                    <span class="badge bg-primary">42</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Обʼєм даних
-                                    <span class="badge bg-primary">65</span>
+                                    {% if clicks %}
+                                        {% for click in clicks %}
+                                            {{ click.url }}
+                                            <span class="badge bg-primary">{{ click.click_count }}</span>
+                                        {% endfor %}
+
+                                    {% else %}
+                                        Немає
+                                    {% endif %}
                                 </li>
                             </ul>
                         </div>

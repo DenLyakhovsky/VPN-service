@@ -1,12 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_http_methods, require_GET
 from django.views.generic import TemplateView, DetailView, UpdateView, FormView
 from .forms import *
-from .models import UserURL
+from .models import UserURL, Click
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
@@ -19,6 +17,10 @@ from urllib.parse import urljoin
 
 class Home(TemplateView):
     template_name = 'service/home.html'
+
+
+class AboutSite(TemplateView):
+    template_name = 'service/about.html'
 
 
 def register(request):
@@ -72,6 +74,7 @@ class UserProfileView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['sites'] = UserURL.objects.filter(user=self.request.user)
+        context['clicks'] = Click.objects.filter(user=self.request.user)
         return context
 
 
@@ -124,13 +127,26 @@ class UserCreateURLView(FormView):
 
 
 @method_decorator(login_required, name='dispatch')
-class ProxyDetailView(View):
+class ProxyView(View):
     def get(self, request, site_url, path):
         user_url = get_object_or_404(UserURL, user=request.user, site_url=site_url)
         base_url = user_url.site_url
+
         proxied_url = urljoin(base_url, path)
 
         proxied_url_with_scheme = f'http://localhost:8000/{proxied_url}'
+
+        # Збільшення лічильника при отриманні запиту
+        user_id = request.user.id
+
+        try:
+            click = Click.objects.get(user_id=user_id, url=base_url)
+        except Click.DoesNotExist:
+            click = Click.objects.create(user_id=user_id, url=base_url)
+
+        click.increment_clicks()
+
+        # Проксіювання запиту
         response = requests.get(proxied_url_with_scheme, headers=request.headers)
 
         return HttpResponse(response.content, content_type=response.headers['content-type'])
