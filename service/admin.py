@@ -1,11 +1,7 @@
 from django.contrib import admin
-from .models import UserProfile
+from .models import UserURL
 
 # happy: 12345qwe
 
 
-class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'name', 'last_name')
-
-
-admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(UserURL)

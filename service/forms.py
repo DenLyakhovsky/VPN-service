@@ -1,6 +1,7 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from .models import UserURL
 
 
 class UserRegisterForm(UserCreationForm):
@@ -10,7 +11,7 @@ class UserRegisterForm(UserCreationForm):
         attrs={'class': 'form-control', 'autocomplete': 'off'}))
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(
         attrs={'class': 'form-control'}))
-    password2 = forms.CharField(label='Повтор паролю', widget=forms.PasswordInput(
+    password2 = forms.CharField(label='Повторення пароля', widget=forms.PasswordInput(
         attrs={'class': 'form-control'}))
 
     class Meta:
@@ -35,3 +36,10 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'last_name']
+
+
+class UserCreateURLSForm(forms.ModelForm):
+    class Meta:
+        model = UserURL
+        fields = ['site_url', 'site_name']
+

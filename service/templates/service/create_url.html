@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Створити
+{% endblock %}
+
+
+{% block content %}
+
+<div style="padding:50px">
+    <h1>Створення сайту</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary btn-block">Створити</button>
+    </form>
+    <br>
+    <br>
+
+    <a href="{% url 'profile' %}">Назад</a>
+</div>
+
+{% endblock %}
+

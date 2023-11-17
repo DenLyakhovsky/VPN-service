@@ -18,7 +18,6 @@ Update
                         <button type="submit" class="btn btn-primary">Змінити</button>
                     </form>
 
-                    <!-- Форма для зміни паролю -->
                     <h4 class="mt-4">Зміна паролю</h4>
                     <form method="post" action="{% url 'update' user_update.pk %}">
                         {% csrf_token %}
