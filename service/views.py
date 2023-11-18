@@ -144,9 +144,9 @@ class ProxyView(View):
         user_id = request.user.id
 
         try:
-            click = Click.objects.get(user_id=user_id, url=proxied_url)
+            click = Click.objects.get(user_id=user_id, url=base_url)
         except Click.DoesNotExist:
-            click = Click.objects.create(user_id=user_id, url=proxied_url)
+            click = Click.objects.create(user_id=user_id, url=base_url)
 
         click.increment_clicks()
 
