@@ -144,12 +144,15 @@ class ProxyView(View):
         user_id = request.user.id
 
         try:
-            click = Click.objects.get(user_id=user_id, url=base_url)
+            click = Click.objects.get(user_id=user_id, url=proxied_url)
         except Click.DoesNotExist:
-            click = Click.objects.create(user_id=user_id, url=base_url)
+            click = Click.objects.create(user_id=user_id, url=proxied_url)
 
         click.increment_clicks()
 
-        response = requests.get(proxied_url_with_scheme, headers=request.headers)
+        if path == 'create':
+            return render(request, template_name='service/error.html')
+        else:
+            response = requests.get(proxied_url_with_scheme, headers=request.headers)
 
         return HttpResponse(response.content, content_type=response.headers['content-type'])

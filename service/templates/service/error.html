@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Error
+{% endblock %}
+
+{% block content %}
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title text-danger">Помилка: Неможливо створити новий об'єкт</h4>
+            <p class="card-text">Під час використання проксі сервера, не можна створити новий URL</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
